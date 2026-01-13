@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 type RangeKey = "1d" | "3d" | "7d";
 const daysOf = (r: RangeKey) => (r === "1d" ? 1 : r === "3d" ? 3 : 7);
 
-export default function RankPage() {
+function RankInner() {
   const sp = useSearchParams();
   const router = useRouter();
   const range = (sp.get("range") as RangeKey) || "1d";
@@ -72,5 +72,12 @@ export default function RankPage() {
         </div>
       )}
     </main>
+  );
+}
+export default function RankPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RankInner />
+    </Suspense>
   );
 }
