@@ -314,3 +314,42 @@ label{ color: var(--muted); font-size: 13px; }
     z-index: 1000;
   }
 }
+/* ====== premium polish (append) ====== */
+:root{
+  --glass: rgba(255,255,255,.06);
+  --glass2: rgba(255,255,255,.10);
+  --line: rgba(255,255,255,.10);
+  --txt: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.62);
+  --accent: #7aa2ff;
+  --accent2:#53e3c2;
+}
+
+html,body{height:100%}
+body{
+  color: var(--txt);
+  background:
+    radial-gradient(1200px 800px at 15% 0%, rgba(122,162,255,.22), transparent 60%),
+    radial-gradient(900px 700px at 90% 10%, rgba(83,227,194,.16), transparent 55%),
+    linear-gradient(180deg, #070b1a, #0b1733);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans JP", Arial;
+}
+
+a{color:inherit}
+a:hover{color:var(--accent)}
+
+button{
+  border: 1px solid var(--line) !important;
+  background: rgba(255,255,255,.05) !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
+  font-weight: 800 !important;
+}
+button:hover{background: rgba(255,255,255,.08) !important}
+
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+hr{border-color: var(--line) !important}
