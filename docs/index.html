@@ -435,6 +435,43 @@ load('wiki');
 
 })();
 </script>
+<script>
+/* === PATCH: support new JSON format (updatedAt + score/comments) === */
+window.__renderItems = function(items, label){
+  const tbody = document.querySelector("#list");
+  if(!tbody) return;
+  document.querySelector("#sourceLabel").textContent = label || "";
+  tbody.innerHTML = "";
+  items.forEach((it, idx) => {
+    const rank = it.rank ?? (idx+1);
+    const title = it.title ?? "(no title)";
+    const url = it.url ?? "#";
+    const views = it.views ?? it.score ?? 0;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="rank">#${rank}</td>
+      <td class="title">
+        <div class="t">${title}</div>
+        <a class="u" href="${url}" target="_blank" rel="noopener">${url}</a>
+      </td>
+      <td class="views">${Number(views).toLocaleString()} ${it.views!=null ? "views" : "score"}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+};
+
+window.__loadJSON = async function(path, label){
+  const res = await fetch(path + (path.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"});
+  const data = await res.json();
+  const items = data.items || [];
+  window.__renderItems(items, label);
+  const upd = data.updated || data.updatedAt || "";
+  const updEl = document.querySelector("#updated");
+  if(updEl) updEl.textContent = upd ? ("updated: " + upd) : "updated: -";
+};
+/* === END PATCH === */
+</script>
 </body>
 </html>
 
@@ -476,6 +513,7 @@ load('wiki');
 })();
 </script>
 <!-- EXTRA_SOURCES:END -->
+
 
 
 
