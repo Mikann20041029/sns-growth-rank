@@ -331,3 +331,103 @@ main, .container, .wrap, .content, #app, #root{
   }
 }
 /* ===== /MOBILE horizontal scroll ===== */
+
+/* UNIFIED_CSS:BEGIN */
+.unified-wrap{
+  margin: 14px auto;
+  max-width: 1100px;
+}
+.unified-head{
+  margin: 6px 0 10px;
+  text-align: left;
+}
+.unified-title{
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 18px;
+}
+.unified-sub{
+  opacity: 0.8;
+  font-size: 12px;
+  margin-top: 2px;
+}
+.unified-panel{
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+}
+.unified-status{
+  padding: 10px 12px;
+  font-size: 12px;
+  opacity: 0.85;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.unified-scroll{
+  width: 100%;
+  overflow-x: auto;        /* スマホ横スクロールOK */
+  -webkit-overflow-scrolling: touch;
+}
+.unified-table{
+  width: 100%;
+  min-width: 780px;        /* ここがスマホで見切れた時に横スクロールになる */
+  border-collapse: collapse;
+}
+.unified-table th, .unified-table td{
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+}
+.unified-table th{
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+.unified-rank{
+  width: 56px;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.unified-titlecell a{
+  color: inherit;
+  text-decoration: none;
+}
+.unified-titlecell a:hover{
+  text-decoration: underline;
+}
+.unified-right{
+  text-align: right;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+.src-tag{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  border: 1px solid rgba(255,255,255,0.14);
+  white-space: nowrap;
+}
+.tag-wiki{
+  background: linear-gradient(135deg, rgba(60,60,60,0.55), rgba(10,10,10,0.35));
+}
+.tag-gtr{
+  background: linear-gradient(135deg, rgba(66,133,244,0.50), rgba(234,67,53,0.40));
+}
+.tag-reddit{
+  background: linear-gradient(135deg, rgba(255,69,0,0.55), rgba(255,200,180,0.25));
+}
+.tag-hn{
+  background: linear-gradient(135deg, rgba(255,102,0,0.55), rgba(255,210,90,0.35));
+}
+/* 端の見切れ対策（全体の横はみ出し封じ） */
+html, body{
+  max-width: 100%;
+  overflow-x: hidden;
+}
+/* UNIFIED_CSS:END */
+

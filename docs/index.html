@@ -1,7 +1,20 @@
 ﻿<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
+  
+<!-- SEO:BEGIN -->
+<title>SNS Growth Rank | Wikipedia/Trends/Reddit/HN 横断急上昇まとめ</title>
+<meta name="description" content="Wikipedia急上昇・Google Trends・Reddit・Hacker News を横断して、いま伸びてる話題を1ページで把握。">
+<link rel="canonical" href="https://mikann20041029.github.io/sns-growth-rank/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SNS Growth Rank | Wikipedia/Trends/Reddit/HN 横断急上昇まとめ">
+<meta property="og:description" content="Wikipedia急上昇・Google Trends・Reddit・Hacker News を横断して、いま伸びてる話題を1ページで把握。">
+<meta property="og:url" content="https://mikann20041029.github.io/sns-growth-rank/">
+<meta property="og:site_name" content="SNS Growth Rank">
+<meta name="twitter:card" content="summary">
+<!-- SEO:END -->
+<meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SNS Growth Rank</title>
   <link rel="stylesheet" href="./styles.css?v=2" />
@@ -140,7 +153,164 @@ load('wiki');
 <div id="ad-left" class="ad-side ad-left">AD PLACEHOLDER (left)</div>
 <div id="ad-right" class="ad-side ad-right">AD PLACEHOLDER (right)</div>
 <!-- ====================================== -->
+<!-- UNIFIED:BEGIN -->
+<div class="unified-wrap">
+  <div class="unified-head">
+    <div class="unified-title">今日の急上昇まとめ（横断）</div>
+    <div class="unified-sub">Wikipedia / Google Trends / Reddit / Hacker News をまとめて表示</div>
+  </div>
+
+  <div class="unified-panel">
+    <div class="unified-status" id="unifiedStatus">loading...</div>
+    <div class="unified-scroll">
+      <table class="unified-table" id="unifiedTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>title</th>
+            <th>source</th>
+            <th class="unified-right">score</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const  = document.getElementById('unifiedStatus');
+  const   = document.querySelector('#unifiedTable tbody');
+
+  const SOURCE = {
+    wiki:  { key:'wiki',  label:'Wikipedia',    cls:'tag-wiki'  },
+    gtr:   { key:'gtr',   label:'GoogleTrends', cls:'tag-gtr'   },
+    reddit:{ key:'reddit',label:'Reddit',       cls:'tag-reddit'},
+    hn:    { key:'hn',    label:'HackerNews',   cls:'tag-hn'    },
+  };
+
+  function pick(o, keys){
+    for (const k of keys){
+      if (o && o[k] != null && String(o[k]).trim() !== '') return o[k];
+    }
+    return '';
+  }
+
+  // どんなJSONでも「それっぽい項目」を拾って統一する（壊れにくい）
+  function normalizeItems(srcKey, data){
+    const raw = (data && (data.items || data.data || data.results || data.children || data.hits)) || data;
+    const arr = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.items) ? raw.items : []);
+    const out = [];
+
+    for (let i=0; i<arr.length; i++){
+      const it = arr[i] || {};
+      const title = pick(it, ['title','name','headline','text','story_title']);
+      const url   = pick(it, ['url','link','permalink','story_url']);
+
+      // 数値っぽいのがあれば拾う（views/score/points/comments など）
+      const metric =
+        Number(pick(it, ['views','viewCount','score','points','upvotes','ups','num_comments','comments','commentCount'])) || 0;
+
+      // スコアは「順位優先 + 数値があるなら少し加点」で雑に統一
+      const rank = i + 1;
+      const s = (1 / rank) * 1000 + Math.min(metric, 100000) * 0.01;
+
+      if (!title) continue;
+
+      out.push({
+        title,
+        url,
+        source: srcKey,
+        score: Math.round(s)
+      });
+    }
+    return out;
+  }
+
+  async function fetchJson(path){
+    const r = await fetch(path, { cache:'no-store' });
+    if (!r.ok) throw new Error(r.status + ' ' + path);
+    return await r.json();
+  }
+
+  async function main(){
+    try{
+      const files = [
+        {src:'wiki',   path:'./data/wiki_ja.json'},
+        {src:'gtr',    path:'./data/trends_google.json'},
+        {src:'reddit', path:'./data/trends_reddit.json'},
+        {src:'hn',     path:'./data/trends_hn.json'},
+      ];
+
+      const all = [];
+      for (const f of files){
+        try{
+          const j = await fetchJson(f.path);
+          if (j && j.ok === false && j.error) {
+            // 失敗でも落とさず続行
+            console.warn('source error', f.src, j.error);
+          }
+          all.push(...normalizeItems(f.src, j));
+        }catch(e){
+          console.warn('fetch error', f.src, e);
+        }
+      }
+
+      // ソース被り（同じtitle）を軽く排除
+      const seen = new Set();
+      const uniq = [];
+      for (const x of all.sort((a,b)=>b.score-a.score)){
+        const key = (x.title || '').toLowerCase().trim();
+        if (!key) continue;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        uniq.push(x);
+        if (uniq.length >= 50) break;
+      }
+
+      .innerHTML = '';
+      uniq.forEach((x, idx) => {
+        const s = SOURCE[x.source] || {label:x.source, cls:'tag-wiki'};
+        const tr = document.createElement('tr');
+
+        const safeUrl = (x.url && String(x.url).startsWith('http')) ? x.url : '';
+        const titleHtml = safeUrl
+          ? '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(x.title) + '</a>'
+          : escapeHtml(x.title);
+
+        tr.innerHTML = 
+          <td class="unified-rank">#</td>
+          <td class="unified-titlecell"></td>
+          <td><span class="src-tag "></span></td>
+          <td class="unified-right"></td>
+        ;
+        .appendChild(tr);
+      });
+
+      .textContent = 'loaded: ' + uniq.length;
+    }catch(e){
+      console.error(e);
+      .textContent = 'error';
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#39;');
+  }
+
+  main();
+})();
+</script>
+<!-- UNIFIED:END -->
 </body>
 </html>
+
+
 
 
