@@ -1,9 +1,219 @@
 {
-  "ok": false,
-  "source": "google_trends_rss",
+  "ok": true,
+  "source": "google_news_rss_as_trends",
   "geo": "JP",
   "lang": "ja",
-  "updatedAt": "2026-01-14T10:57:36.530Z",
-  "error": "fetch failed 404: https://trends.google.com/trends/trendingsearches/daily/rss",
-  "items": []
+  "updatedAt": "2026-01-14T11:10:23.023Z",
+  "items": [
+    {
+      "rank": 1,
+      "title": "維新はもう用済み？〉「もはやメチャクチャ」身内からも大ブーイングの出直し大阪ダブル選、背景には不祥事による超低支持率が…自民から切られないための策の行方（集英社オンライン",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBhVlZMZ2x5QXdzWVU3dWZPWFR5dmRkbUQ2bUptRWd1TVZkcllHeDlZU0dvczctWHR0ai1pYjY5cjZKeV9NTDItUFZEUzdFeUIxYy03U2l2a3JPNFZsTjBTZDVuM0g1d3l0ay16NWdOS1dfRzhQQ3YyczlkN2RFZlE?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 03:24:14 GMT"
+    },
+    {
+      "rank": 2,
+      "title": "賭けに出た高市首相、「願掛け」かなうか 衆院解散で丙午政局に火蓋",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9qOG5NYkdqd2dldnZqblBCbUdvaXFhSUJxeWVwR2NUbHlyQWNTRDBmWWliVXIxX3JWcFpZYUpoNm9KQ3lGRWVyLUNTaGNhRDExUDM2b2JwX2ljUGY1MWd4NTRKNW9ENUUwaXM3SQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 10:00:00 GMT"
+    },
+    {
+      "rank": 3,
+      "title": "トランプ氏、視察先の自動車工場で中指立てたか ホワイトハウスは「適切」と説明",
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBaa1JTQ25TZGxQbTJyNFUwWTFnR1d1T1owNk9mZV9PQ2l0WHgyODZ1MS1CbzFMMm55ak1Ya1RMNDc2WTFILUNnTTRFTmlHYUJ5?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 00:33:00 GMT"
+    },
+    {
+      "rank": 4,
+      "title": "出直し前橋市長選挙、小川晶氏はなぜ勝利できたのか…強い批判が同情票に",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1VcnF3bjZkS1hhQ0htTHlmRi1oM1JPd2lPTFBtcjdWR0xjVXlFV3ZYcHdpT08wSi03VmlxR0ZLNW9qcE9jLU1SbVUyRm9WWFlkR01KMHdwT1NsTGVKT0hsM2dvbFVLUQ?oc=5",
+      "source": "",
+      "pubDate": "Tue, 13 Jan 2026 23:09:00 GMT"
+    },
+    {
+      "rank": 5,
+      "title": "「アルコールを飲んだ事実はありません」飲酒運転で2歳男児含む家族3人死亡 危険運転致死傷罪に問われたトラック運転手の男が初公判で起訴内容を一部否認 前橋地裁",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1xUUhNRGhySkVrU1E2a0JCQklkU3lrbGd6Y1R5OWpKRUc5RjVYWnA2Y09pS0hOTHRVYmNiZUUyYWJNMkdra0FYaUcyOGEydmw3YkhYYnJwaw?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 05:14:00 GMT"
+    },
+    {
+      "rank": 6,
+      "title": "読む政治：台湾有事答弁、立憲支持層でも「撤回不要」？ 対中政策巡る民意は",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9aU0U5R1gycnNNYXczVnZLTDFnU0x3LS1tbExnNVlxZFVwTHJHYWhPSVEyR2lBQkVVWlVZeVoyLUlxOVNlVjc2djdiT2N1T0RvWjJaQ05rbnNvd1N2ekxVcl9GMTl0WlNh?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 02:00:00 GMT"
+    },
+    {
+      "rank": 7,
+      "title": "北海道の飲食店で壁に遺棄された女性、行方不明日「彼氏とゆっくりする」と親族に説明",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9hWGlYTFZEbmg4TktMY2ZpTzVtSGt6WFU1YWdEMDFIbWt3TkVPZ0VPdGdsTFJvUi1PTDBseGo2dktESmJRVGQwdkNMa1hfODFtZ0o5enZoQlNWNENxaE1OZXN1S1YzZDlkMDdWb245LXVhQjZmN1E?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 03:49:50 GMT"
+    },
+    {
+      "rank": 8,
+      "title": "悠仁さま、「とんぼ」の歌ににじむ自然への思い 初めての歌会始",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1HYnhUQ1U5NnlsVVg2Wjk1cVFtemlNNUxzcngxVnNaQ2Z4WXZUaG4ycGJmS0N5MVdYdXZhRzMwS1ZGRW1GLVVRaHY3Z3EyYXBzeDZXa2dWd2EtdHBPTWFxazY0Q2J6Yl9INFRaeg?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 02:18:05 GMT"
+    },
+    {
+      "rank": 9,
+      "title": "高市首相の長男、山本建氏が福井2区から次期衆院選出馬へ 高木毅元国対委員長も検討",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5kakNlcENySlUtMW8zOGtLN2Vabk5nU1M1RUgtZWtENjBaZzZuRXZVVS1tcWZwMW1LRzRudS1TY0FwbDgwaUJJajN3QlhmcGNFUjVCVmJ3eFBVT0ZqUFNnenF6Mkg1TEs4c0U5cTFKUVpyUE9OWGc?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 02:53:55 GMT"
+    },
+    {
+      "rank": 10,
+      "title": "タワマン43階から飛び降り巻き添え死 重過失致死容疑で書類送検 [大阪府]",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE92M0JhVEQ4eEtzZkRYRFJ2Mm9jLUQ0R3MyU2F2eHlrTTVEOXVESGFEeVc2QlEzTFhoQ3hqX0lNWkFIREVjVkZPWXFJSDEyUlhOZnBqbmxCXzBXM2xxRFh6Z3VYdUVjeVE?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 05:57:02 GMT"
+    },
+    {
+      "rank": 11,
+      "title": "アングル：ルビオ氏の政治的命運、マドゥロ氏失脚でベネズエラと結び付く",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1FQmNWT2V6WmFrYUpPUFdwdWFpZjlnTWQwT2xyOGtIaEtUQUg1cFJ0NWlfNWtGc1FuTGxYeXdTdlVSem1HVDMwbGdwaHpZNGR2TEo1X1QyMGMzb1ZjeklZNk1ZLXN3cXlEcEhURDMxN0I0b1pScENBeGdn?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 09:26:40 GMT"
+    },
+    {
+      "rank": 12,
+      "title": "死刑求刑にあきれた様子で首を横に振る被告人・尹錫悦、内乱裁判2月19日に判決言い渡し（朝鮮日報日本語版）",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9iUEI3MVhqR1JmS0N4bS1oMGFDN2x4SURvcGYycTVlYzVINjMzMUViQTdrR2RtTl9DQ09vMmZRUWJ2LTYxQ056UWtVaUo1ZV9YTVlDbnpMTFRjRTBabGphY2U2bWYwMGFHUjh6MnNWV1d6eEp2MEd0eXBFU1FhUkU?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 02:25:00 GMT"
+    },
+    {
+      "rank": 13,
+      "title": "竹中平蔵「中国は日本に\"攻撃\"してくる」ベネズエラ侵攻で世界激変！サツキノミクス化した日本経済、高市総理に求められる大胆な改革（みんかぶマガジン）",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5tT1Z3VDU5YWY2NVdUcUVOcVFEQVpMUzIxQUhEajIzMWpfM01IQVQzSzY2RHlmblVfMFFhZ2hFaF9XanRyTmRGeElfU3d2dGhtVFE4TjBrcTRYUnZhOVdjWmVCYkdzMkVxemZ5XzZMVXlZYlp0S1N3ZmRSM2NTWnc?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 00:10:09 GMT"
+    },
+    {
+      "rank": 14,
+      "title": "ベネズエラ国営石油会社、原油増産へ始動 タンカー出航",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOSGtfcm5qZExxY0tDY2tlXzJjcy1mMHdiZXhvQUlkenh1dmFrRExBRU9PWUdNT3gtRy1xOV9HdklMcXNwd3hGQ2pJdnliVXhNcHFtYzBpcEt2Q2g0UTN2VzUtR19CY0RvejFVNk8zcVliVGVQOWJsRk9qUURJSGVQTndIWWlrbXM5?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 00:35:00 GMT"
+    },
+    {
+      "rank": 15,
+      "title": "豊田織機のTOB価格、1株1万8800円へ引き上げ 15日開始に前倒し",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9mS1VpbnpDSkM0OGJJeEVSUWxOdVlrMzdRMXREdTlaQmg4V3NmWm1lektMRmdIV0s4VzVpU2pXQlduX3FEdWhMS3VvUWFJU19oXzNsbTFqYVBzTGxUWWM0S0M0WGg1OGkzQ0laRw?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 07:48:28 GMT"
+    },
+    {
+      "rank": 16,
+      "title": "日本は解散総選挙、海外はパウエル訴追とイラン",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5BYmJmYndJeUJiU3R6QmtsWHB6eTB0LTc4RkxNd2hXSUZNa1cxSmFjSlhEdHNEYURIOHpPOE44bUtMRWVEZHVTNGIxeFFCeWNucUwxckp5RkE2MGF2M0c0?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 05:29:57 GMT"
+    },
+    {
+      "rank": 17,
+      "title": "G7レアアース中国依存度下げへ 片山大臣「いつか日本のようにとの危機感を持ったか」",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBnLTg2NkJMb1MwTHh4S0tZdGwydTk2c3ZNQWc2WllhZHJYNGpqTDNzY1dVTmZsQWwycWNJNW1zWUd0N1RsajVfTFBkTjd5cVdiRG1FNmZhUHJTdnlET0d2MnRvekdwWjllQ1NrZ0RNWFJIUQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 02:23:00 GMT"
+    },
+    {
+      "rank": 18,
+      "title": "【市況】 明日の株式相場に向けて＝「下水道インフラ関連」爆速人気再燃の予兆",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5VeGVGNW5Lb2xBRk8ySkZSNHVrUlBnV0dSM0hrclVNd3o3eV8xOFFzTmVuTHdtdXAwc2hxVXVOc0p5VDhPV25lZjY1d3o4X25nbzJEc3czcU44YjE0YS1RRA?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 08:30:20 GMT"
+    },
+    {
+      "rank": 19,
+      "title": "iOS 26で翻訳機能に対応した『電話』アプリ、海外レストランの予約もなんとかいけそう",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBldVFaSm5yU1c5QjVza2huazZYWk5pdVZJX1NqbkZ6dUtFOTBrQzJhMlc1R2s3eTlucnUtN21DZ3V3Y2FvV29sVzZhNWlHTEZrNkMyVGlRX3dpbXlGMUpEbDBuVEpzcW5RVFRnS0x4eUdtMjZjNUhJYVkzUQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 05:00:00 GMT"
+    },
+    {
+      "rank": 20,
+      "title": "「ガンプラ」に着想を得た3Dプラモ組みゲーム『Mech Builder 3D』がSteamにて正式リリース",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5KQ05TdjBwNnc4Z3hFc1RXRWdUWGlvNW03NlQ2SnpoZ1lrUTBMc1hrbGxPN2FRakZvWnlmMVBhakdOZVdrRFNRN19XRko4Zm9UcV9wUlRjV21JZw?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 08:52:00 GMT"
+    },
+    {
+      "rank": 21,
+      "title": "地球の大気中の粒子、月に吸収されていた 数十億年続く現象と天文学者",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE8xNnk5R0ZFenFLMjJaWmZYZ0tVbDZ5VlJwZ2NSWkU0eEZGWjJGYWJBU1NnYk5pRUNlLTFLbFo1akJCZzl3TEhvWERCSzNUUWprckpVbg?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 03:32:00 GMT"
+    },
+    {
+      "rank": 22,
+      "title": "上野マルイにて開催決定！",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5sYndfSzhhenhkdjVSU3pOdGlJWjQ1SGZ1eVpGTnNjMWhXMm9ZcXM3WWQxTVZ2OU5tSF84WUtkbEo3R21oMWpQUHBJNE56eTFpMVJmT29kYWkyMl9PSWdZd3ZoUWZGbE81SlE?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 10:00:02 GMT"
+    },
+    {
+      "rank": 23,
+      "title": "芥川賞に鳥山まこと氏・畠山丑雄氏、直木賞に嶋津輝氏",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9xUTk3Z25XYXBuTkNZcXU1NFNhWWJOenRZeW12dnNmOENMX3BuVTJkX05VQWNrY2hQMlRJY2o4NG51ZTFkNUlOVW1OX0E5N0dpLVBkNVpaZUQ4SU1mUEhqMEF0bkVUSXRhM29vQQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 09:52:23 GMT"
+    },
+    {
+      "rank": 24,
+      "title": "日テレ・岩田絵里奈アナ ３月末退社＆アナ職継続へ「退社は事実」…“次期エース”の呼び声もフリー転身",
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBYYWlhV3pqclFGdG5YekFGOXZQdmFMZUJ1ajB4TWVaUzE3UHFQdHJMR19mU1FTR2phaXZyd1hVM29QbGZFMEYyWVFZOG9yaHliSFBLZWlFZUpGeVRLcHpSZktn?oc=5",
+      "source": "",
+      "pubDate": "Tue, 13 Jan 2026 03:00:00 GMT"
+    },
+    {
+      "rank": 25,
+      "title": "名古屋の日本ガイシホールが「クロコくんホール」に改称 4月から",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1zOUJ5TFpuNmZrSGMwRGhwd1Z6NnZoQThxNm9WbE5zQnV5dVp2UlA0SHVCLWxoTl9PQ1RTVTJQTFFFVHZOV1AzbEVaNHprMTQwZW9kMzVVdXNyeVczQkd4V3BKZFZ2QWZkMW56NQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 05:55:02 GMT"
+    },
+    {
+      "rank": 26,
+      "title": "【紅白出場】ME:I 加藤心(25)告白140分「事務所に病気をでっち上げられ、追い出されました」【先出し全文】（文春オンライン）",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5zSlE0d2tCWVRVbEtTNzRfTHlMc1EzQ29LVFdqNXI3UDNrVlFlYTJFV0lNVlFkUVBrUVdTRkF6ZHZxR0otZkZTb3BJYTlYeUpOTG92Qzd0d0VxQTJUaWJoRGlPenI1QlJzV1B3ZExQRTloSFlicC1ISmVPaUQya3M?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 07:00:00 GMT"
+    },
+    {
+      "rank": 27,
+      "title": "齋藤俊輔選手 KVCウェステルロー（ベルギー）へ完全移籍のお知らせ",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9iSzF5ckdoZXotOWYyRldSQVppX0J6Q1N3aEtZV3NTQ1I0TlZMbXhIVVk4bWhhUjJ3VU5JLUxyUEFzLUo0MVNfVjFpMW84c2pKX0xYcU1WWQ?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 10:01:33 GMT"
+    },
+    {
+      "rank": 28,
+      "title": "古市尊選手 入団記者会見",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5jNjVaOUtmU3dIS212VlJtekVnYTN6cVV3TnJYbk1jM0pUWFllNmdYU2tBODVENHZCYUNDTGJUSWZIMkJTMzlVYWFWbTI3TGNPUnIwU3FNdTF4MnVmejdGNw?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 08:18:48 GMT"
+    },
+    {
+      "rank": 29,
+      "title": "日本ハム 新外国人のロドリフォ・カストロと合意 球団発表 ドミニカ共和国出身の２６歳強肩内野手 メジャー通算２２本塁打 サウリン・ラオとの合意も発表（デイリースポーツ）",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE13R2FvVHYtZmxZMG5Gd05BckZYOWRBZ3o5Q09Fb09uOGlieE9xZ0gtUk1vUVEtc093WFI4NEI3Q3ZLYXhxMC1NcFVyTnIxVGt5MjUtRXd4RTRRTFBKTjlhcEVlS0JWZm5CV2FqWHd6dnZPSmVhZE44dHlNcUNqNWs?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 04:00:55 GMT"
+    },
+    {
+      "rank": 30,
+      "title": "ホセ・ウレーニャ選手 契約合意に関して",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBzZTZZTzBVekp0U0d0MzFPVEllZ0V0UWM2SDRiVTZXLU5kclBjSHdWUGVBRFlva1dpcE5GV0pTa0xrLS1hVTBaeVFCLVZTSGNibHc1MGgtV3ZMU1BZUlU0RnhfUGZwd2hIRUE?oc=5",
+      "source": "",
+      "pubDate": "Wed, 14 Jan 2026 06:04:44 GMT"
+    }
+  ]
 }
