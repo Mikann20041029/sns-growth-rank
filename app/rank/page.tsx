@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type WikiItem = {
   title: string;
@@ -11,86 +11,249 @@ type WikiItem = {
 
 export default function RankPage() {
   const [items, setItems] = useState<WikiItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [date, setDate] = useState<string>("");
+  const [err, setErr] = useState<string>("");
+  const [q, setQ] = useState<string>("");
 
   useEffect(() => {
-    let alive = true;
-
     (async () => {
       try {
-        setLoading(true);
-        setError(null);
-
+        setErr("");
         const res = await fetch("/api/wiki/top", { cache: "no-store" });
         if (!res.ok) throw new Error(`API error: ${res.status}`);
-
         const data = await res.json();
-        if (alive) setItems(data.items ?? []);
+        setItems(Array.isArray(data.items) ? data.items : []);
+        setDate(String(data.date ?? ""));
       } catch (e: any) {
-        if (alive) setError(e?.message ?? "Unknown error");
-      } finally {
-        if (alive) setLoading(false);
+        setErr(e?.message ?? "Unknown error");
       }
     })();
-
-    return () => {
-      alive = false;
-    };
   }, []);
 
+  const filtered = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    if (!s) return items;
+    return items.filter((it) => it.title.toLowerCase().includes(s));
+  }, [items, q]);
+
+  const fmt = (n: number) => n.toLocaleString("en-US");
+
   return (
-    <main style={{ padding: 18 }}>
-      <h1 style={{ fontSize: 20, fontWeight: 800, marginBottom: 12 }}>
-        Wikipedia 今日の急上昇（日本）
-      </h1>
+    <div style={styles.bg}>
+      <div style={styles.wrap}>
+        <header style={styles.header}>
+          <div style={styles.brandRow}>
+            <div style={styles.brandDot} />
+            <div style={styles.brandText}>SNS Growth Rank</div>
+            <div style={{ flex: 1 }} />
+            <div style={styles.pill}>
+              Wikipedia / JP {date ? `・${date}` : ""}
+            </div>
+          </div>
 
-      <div style={{ opacity: 0.7, marginBottom: 12 }}>
-        取得元: /api/wiki/top
+          <div style={styles.titleRow}>
+            <div style={styles.title}>Wikipedia 今日の急上昇（日本）</div>
+            <a href="/api/wiki/top" target="_blank" rel="noreferrer" style={styles.apiLink}>
+              /api/wiki/top
+            </a>
+          </div>
+
+          <div style={styles.controls}>
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="検索（例：俳優 / アニメ / 地名）"
+              style={styles.input}
+            />
+            <div style={styles.count}>
+              {err ? "取得失敗" : `${filtered.length}件`}
+            </div>
+          </div>
+
+          {err ? (
+            <div style={styles.errBox}>
+              <span style={styles.errBadge}>ERROR</span>
+              <span>{err}</span>
+            </div>
+          ) : null}
+        </header>
+
+        <main style={styles.card}>
+          <div style={styles.cardTop}>
+            <div style={styles.smallLabel}>クリックでWikipediaへ</div>
+            <div style={styles.smallLabelRight}>Views</div>
+          </div>
+
+          <div style={styles.list}>
+            {filtered.length === 0 && !err ? (
+              <div style={styles.empty}>データなし</div>
+            ) : null}
+
+            {filtered.map((it) => (
+              <a
+                key={it.rank}
+                href={it.url}
+                target="_blank"
+                rel="noreferrer"
+                style={styles.row}
+              >
+                <div style={styles.left}>
+                  <div style={styles.rankBadge}>{it.rank}</div>
+                  <div style={styles.titleCol}>
+                    <div style={styles.itemTitle}>{it.title}</div>
+                    <div style={styles.itemUrl}>{it.url}</div>
+                  </div>
+                </div>
+                <div style={styles.views}>{fmt(it.views)}</div>
+              </a>
+            ))}
+          </div>
+        </main>
+
+        <footer style={styles.footer}>
+          <div style={styles.footerText}>
+            MVP / 見た目はあとで盛れる（今は「動く」が正義）
+          </div>
+        </footer>
       </div>
-
-      {loading && <div>読み込み中...</div>}
-
-      {error && (
-        <div
-          style={{
-            padding: 12,
-            borderRadius: 10,
-            border: "1px solid #fecaca",
-            background: "#fff5f5",
-            color: "#991b1b",
-            marginBottom: 12,
-          }}
-        >
-          エラー: {error}
-        </div>
-      )}
-
-      <div style={{ display: "grid", gap: 10 }}>
-        {items.map((it) => (
-          <a
-            key={it.rank}
-            href={it.url}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: 12,
-              borderRadius: 10,
-              border: "1px solid #e5e7eb",
-              textDecoration: "none",
-              color: "#111",
-              background: "#fff",
-            }}
-          >
-            <span>
-              {it.rank}. {it.title}
-            </span>
-            <span style={{ opacity: 0.6 }}>{it.views.toLocaleString()}</span>
-          </a>
-        ))}
-      </div>
-    </main>
+    </div>
   );
 }
+
+const styles: Record<string, React.CSSProperties> = {
+  bg: {
+    minHeight: "100vh",
+    padding: 24,
+    background:
+      "radial-gradient(900px 500px at 15% 10%, rgba(255,60,60,0.18), transparent 60%)," +
+      "radial-gradient(900px 700px at 85% 20%, rgba(120,200,255,0.14), transparent 60%)," +
+      "radial-gradient(900px 700px at 50% 90%, rgba(255,120,180,0.12), transparent 60%)," +
+      "linear-gradient(180deg, #0a0a0a, #0b0b0b)",
+    color: "white",
+  },
+  wrap: { maxWidth: 980, margin: "0 auto" },
+  header: {
+    padding: "14px 14px 10px",
+    borderRadius: 18,
+    border: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.06)",
+    backdropFilter: "blur(10px)",
+  },
+  brandRow: { display: "flex", alignItems: "center", gap: 10 },
+  brandDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 99,
+    background: "linear-gradient(90deg,#ff3c3c,#ffffff)",
+    boxShadow: "0 0 18px rgba(255,60,60,0.35)",
+  },
+  brandText: { fontWeight: 800, letterSpacing: 0.2, opacity: 0.95 },
+  pill: {
+    fontSize: 12,
+    padding: "6px 10px",
+    borderRadius: 999,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(0,0,0,0.35)",
+    opacity: 0.9,
+  },
+  titleRow: {
+    display: "flex",
+    alignItems: "baseline",
+    gap: 10,
+    marginTop: 10,
+    flexWrap: "wrap",
+  },
+  title: { fontSize: 16, fontWeight: 800, opacity: 0.95 },
+  apiLink: {
+    fontSize: 12,
+    opacity: 0.75,
+    textDecoration: "none",
+    borderBottom: "1px dashed rgba(255,255,255,0.25)",
+  },
+  controls: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 10,
+  },
+  input: {
+    flex: 1,
+    borderRadius: 12,
+    padding: "10px 12px",
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(0,0,0,0.35)",
+    color: "white",
+    outline: "none",
+  },
+  count: {
+    minWidth: 70,
+    textAlign: "right",
+    opacity: 0.8,
+    fontSize: 12,
+  },
+  errBox: {
+    marginTop: 10,
+    padding: "10px 12px",
+    borderRadius: 12,
+    border: "1px solid rgba(255,80,80,0.35)",
+    background: "rgba(255,80,80,0.12)",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+  },
+  errBadge: {
+    fontSize: 11,
+    fontWeight: 800,
+    padding: "4px 8px",
+    borderRadius: 999,
+    background: "rgba(255,80,80,0.25)",
+    border: "1px solid rgba(255,80,80,0.35)",
+  },
+  card: {
+    marginTop: 14,
+    borderRadius: 18,
+    border: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.05)",
+    overflow: "hidden",
+  },
+  cardTop: {
+    padding: "10px 14px",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    borderBottom: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(0,0,0,0.20)",
+  },
+  smallLabel: { fontSize: 12, opacity: 0.7 },
+  smallLabelRight: { fontSize: 12, opacity: 0.7, marginLeft: "auto" },
+  list: { display: "flex", flexDirection: "column" },
+  row: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "12px 14px",
+    textDecoration: "none",
+    color: "white",
+    borderBottom: "1px solid rgba(255,255,255,0.06)",
+  },
+  left: { display: "flex", alignItems: "center", gap: 12, minWidth: 0, flex: 1 },
+  rankBadge: {
+    width: 34,
+    height: 34,
+    borderRadius: 12,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 900,
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    flex: "0 0 auto",
+  },
+  titleCol: { minWidth: 0 },
+  itemTitle: { fontSize: 14, fontWeight: 700, opacity: 0.95, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
+  itemUrl: { fontSize: 11, opacity: 0.6, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
+  views: { fontVariantNumeric: "tabular-nums", opacity: 0.9, fontWeight: 800 },
+  empty: { padding: 18, opacity: 0.7, fontSize: 13 },
+  footer: { padding: 14, opacity: 0.6, fontSize: 12 },
+  footerText: { textAlign: "center" },
+};
