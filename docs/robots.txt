@@ -1,0 +1,3 @@
+﻿User-agent: *
+Allow: /
+Sitemap: https://arseiichi1029.github.io/sns-growth-rank/sitemap.xml
