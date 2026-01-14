@@ -509,8 +509,60 @@ window.__loadJSON = async function(path, label){
   document.getElementById("btn-reddit")?.addEventListener("click", () => loadFromLocalJson("reddit", "Reddit / hot"));
   document.getElementById("btn-hn")?.addEventListener("click", () => loadFromLocalJson("hn", "Hacker News / top"));
 })();
+<script>
+const root = document.documentElement;
+const listEl = document.getElementById("list");
+
+function renderItems(items, label){
+  listEl.innerHTML = "";
+  items.forEach(it=>{
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `
+      <div class="rank">#${it.rank}</div>
+      <div class="title">
+        <a href="${it.url}" target="_blank" rel="noopener">${it.title}</a>
+      </div>
+      <div class="views">${it.views ?? 0}</div>
+    `;
+    listEl.appendChild(row);
+  });
+  document.getElementById("source-label").textContent = label;
+}
+window.__renderItems = renderItems;
+
+// Reddit
+async function loadReddit(){
+  root.setAttribute("data-theme","reddit");
+  const r = await fetch("./data/trends_reddit.json?cb="+Date.now());
+  const j = await r.json();
+  const items = j.items.map((it,i)=>({
+    rank: i+1,
+    title: it.title,
+    url: it.permalink || it.url,
+    views: it.score
+  }));
+  renderItems(items,"Reddit / hot");
+}
+
+// Hacker News
+async function loadHN(){
+  root.setAttribute("data-theme","hn");
+  const r = await fetch("./data/trends_hn.json?cb="+Date.now());
+  const j = await r.json();
+  const items = j.items.map((it,i)=>({
+    rank: i+1,
+    title: it.title,
+    url: it.url || ("https://news.ycombinator.com/item?id="+it.id),
+    views: it.score
+  }));
+  renderItems(items,"Hacker News / top");
+}
+
+document.getElementById("btn-reddit").onclick = loadReddit;
+document.getElementById("btn-hn").onclick = loadHN;
 </script>
-<!-- EXTRA_SOURCES:END -->
+
 
 
 
