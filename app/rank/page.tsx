@@ -1,6 +1,6 @@
-import { headers } from "next/headers";
+"use client";
 
-export const dynamic = "force-dynamic";
+import { useEffect, useState } from "react";
 
 type WikiItem = {
   title: string;
@@ -9,51 +9,35 @@ type WikiItem = {
   url: string;
 };
 
-function getBaseUrlFromEnvOrHeaders() {
-  // Vercel ならこれが一番安定（プロトコル無しで入る）
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
+export default function RankPage() {
+  const [items, setItems] = useState<WikiItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // ローカル/それ以外の保険
-  const h = headers(); // next/headers は同期でもOKな版があるので安全側で分岐
-  // もし Promise だったら下の try/catch が拾う
-  // @ts-ignore
-  const host = h.get?.("x-forwarded-host") ?? h.get?.("host");
-  // @ts-ignore
-  const proto = h.get?.("x-forwarded-proto") ?? "http";
+  useEffect(() => {
+    let alive = true;
 
-  if (host) return `${proto}://${host}`;
-  return "http://localhost:3000";
-}
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-async function getTop(): Promise<WikiItem[]> {
-  let base = "http://localhost:3000";
+        const res = await fetch("/api/wiki/top", { cache: "no-store" });
+        if (!res.ok) throw new Error(`API error: ${res.status}`);
 
-  try {
-    // headers() が Promise 版の環境もあるので、ここで吸収
-    const h = await (headers() as any);
+        const data = await res.json();
+        if (alive) setItems(data.items ?? []);
+      } catch (e: any) {
+        if (alive) setError(e?.message ?? "Unknown error");
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
 
-    if (process.env.VERCEL_URL) {
-      base = `https://${process.env.VERCEL_URL}`;
-    } else {
-      const host = h.get("x-forwarded-host") ?? h.get("host");
-      const proto = h.get("x-forwarded-proto") ?? "http";
-      if (host) base = `${proto}://${host}`;
-    }
-  } catch {
-    base = getBaseUrlFromEnvOrHeaders();
-  }
-
-  const res = await fetch(`${base}/api/wiki/top`, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch wiki top: ${res.status}`);
-
-  const data = await res.json();
-  return data.items ?? [];
-}
-
-export default async function RankPage() {
-  const items = await getTop();
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <main style={{ padding: 18 }}>
@@ -64,6 +48,23 @@ export default async function RankPage() {
       <div style={{ opacity: 0.7, marginBottom: 12 }}>
         取得元: /api/wiki/top
       </div>
+
+      {loading && <div>読み込み中...</div>}
+
+      {error && (
+        <div
+          style={{
+            padding: 12,
+            borderRadius: 10,
+            border: "1px solid #fecaca",
+            background: "#fff5f5",
+            color: "#991b1b",
+            marginBottom: 12,
+          }}
+        >
+          エラー: {error}
+        </div>
+      )}
 
       <div style={{ display: "grid", gap: 10 }}>
         {items.map((it) => (
@@ -93,4 +94,3 @@ export default async function RankPage() {
     </main>
   );
 }
-
