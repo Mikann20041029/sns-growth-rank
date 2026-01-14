@@ -1,32 +1,28 @@
-import "./globals.css";
-
-export const metadata = {
-  title: "SNS Growth Rank",
-  description: "SNS Growth Rank",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body>
-        <div className="shell">
-          <aside className="adRail adRailLeft">
-            <div className="adBox">AD (Left)</div>
+      <body style={{ margin: 0, background: "#0b0b0f", color: "#fff" }}>
+        <div style={{ display: "flex", minHeight: "100vh" }}>
+          
+          {/* PC左広告 */}
+          <aside className="pc-ad" style={{ width: 160, padding: 8 }}>
+            <div className="ad-box">AD</div>
           </aside>
 
-          <main className="content">{children}</main>
+          {/* メイン */}
+          <main style={{ flex: 1, padding: 16 }}>
+            {children}
+          </main>
 
-          <aside className="adRail adRailRight">
-            <div className="adBox">AD (Right)</div>
+          {/* PC右広告 */}
+          <aside className="pc-ad" style={{ width: 160, padding: 8 }}>
+            <div className="ad-box">AD</div>
           </aside>
         </div>
 
-        <div className="adBottom">
-          <div className="adBottomInner">AD (Bottom)</div>
+        {/* スマホ下広告 */}
+        <div className="mobile-ad">
+          AD
         </div>
       </body>
     </html>

@@ -283,3 +283,34 @@ label{ color: var(--muted); font-size: 13px; }
     grid-template-columns: 300px minmax(320px, 980px) 300px;
   }
 }
+.ad-box {
+  height: 600px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-ad {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .pc-ad {
+    display: none;
+  }
+  .mobile-ad {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    z-index: 1000;
+  }
+}
