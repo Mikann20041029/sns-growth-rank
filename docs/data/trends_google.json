@@ -3,7 +3,7 @@
   "source": "google_trends_rss",
   "geo": "JP",
   "lang": "ja",
-  "updatedAt": "2026-01-14T10:40:23.675Z",
-  "error": "fetch failed 404: https://trends.google.com/trends/trendingsearches/daily/rss?hl=ja",
+  "updatedAt": "2026-01-14T10:57:36.530Z",
+  "error": "fetch failed 404: https://trends.google.com/trends/trendingsearches/daily/rss",
   "items": []
 }
