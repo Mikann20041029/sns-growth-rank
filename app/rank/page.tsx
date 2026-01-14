@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+﻿export const dynamic = "force-dynamic";
 
 type WikiItem = {
   title: string;
@@ -51,15 +51,15 @@ export default async function RankPage() {
   return (
     <main style={{ padding: 18, maxWidth: 860, margin: "0 auto" }}>
       <h1 style={{ fontSize: 20, fontWeight: 800, marginBottom: 12 }}>
-        Wikipedia 今日の急上昇（日本）
+        Wikipedia 莉頑律縺ｮ諤･荳頑・・域律譛ｬ・・
       </h1>
 
       <div style={{ opacity: 0.75, marginBottom: 12 }}>
-        取得元: <code>/api/wiki/top</code>
+        蜿門ｾ怜・: <code>/api/wiki/top</code>
         {wiki?.date ? (
           <>
             {" "}
-            | 日付: <b>{wiki.date}</b>
+            | 譌･莉・ <b>{wiki.date}</b>
           </>
         ) : null}
       </div>
@@ -74,7 +74,7 @@ export default async function RankPage() {
             marginBottom: 12,
           }}
         >
-          エラー: {wikiError}
+          繧ｨ繝ｩ繝ｼ: {wikiError}
         </div>
       ) : null}
 
@@ -131,11 +131,11 @@ export default async function RankPage() {
       </div>
 
       <h2 style={{ marginTop: 28, fontSize: 18, fontWeight: 900 }}>
-        Google Trends（急上昇）
+        Google Trends・域･荳頑・・・
       </h2>
 
       <div style={{ opacity: 0.75, marginBottom: 10 }}>
-        取得元: <code>/api/trends/google</code>
+        蜿門ｾ怜・: <code>/api/trends/google</code>
       </div>
 
       {trendsError ? (
@@ -148,7 +148,7 @@ export default async function RankPage() {
             marginBottom: 12,
           }}
         >
-          エラー: {trendsError}
+          繧ｨ繝ｩ繝ｼ: {trendsError}
         </div>
       ) : null}
 

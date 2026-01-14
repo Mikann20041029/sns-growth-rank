@@ -1,8 +1,9 @@
-﻿{
+{
   "ok": false,
-  "source": "google_trends_rss",
+  "source": "google_trends_dailytrends_api",
   "geo": "JP",
   "lang": "ja",
-  "updatedAt": "",
+  "updatedAt": "2026-01-14T09:19:41.369Z",
+  "error": "fetch failed 404: https://trends.google.com/trends/api/dailytrends?hl=ja-JP&tz=-540&geo=JP&ns=15",
   "items": []
 }
