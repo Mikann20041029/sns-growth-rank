@@ -1,0 +1,131 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SNS Growth Rank | Hacker News</title>
+  <style>
+    :root{ color-scheme: dark; }
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans JP", sans-serif;
+      background: linear-gradient(135deg, #ff6600 0%, #ffd24a 50%, #ff6600 100%);
+      min-height:100vh;
+      padding: 24px 12px;
+    }
+    .wrap{ max-width: 1100px; margin: 0 auto; }
+    .top{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .title{
+      background: rgba(0,0,0,.65);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color:#fff;
+      backdrop-filter: blur(10px);
+    }
+    .title h1{ margin:0; font-size: 22px; letter-spacing:.3px; }
+    .title p{ margin:4px 0 0; opacity:.8; font-size: 12px; }
+    .nav a{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.65);
+      color:#fff;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.18);
+      margin-right:8px;
+    }
+    .panel{
+      margin-top: 14px;
+      background: rgba(0,0,0,.72);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 18px;
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .meta{
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      gap:10px; flex-wrap:wrap;
+    }
+    .list{ width:100%; border-collapse:collapse; }
+    .list tr{ border-bottom: 1px solid rgba(255,255,255,.08); }
+    .list td{ padding: 12px 14px; vertical-align:top; }
+    .idx{ width:42px; color: rgba(255,255,255,.75); font-weight:700; }
+    .t{ color:#fff; font-weight:700; }
+    .u{ color: rgba(255,255,255,.70); font-size: 12px; word-break: break-all; }
+    .r{ text-align:right; white-space:nowrap; width:170px; color: rgba(255,255,255,.8); }
+    .badge{
+      display:inline-block; padding:4px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.45);
+    }
+    @media (max-width: 700px){
+      .r{ width:auto; }
+      .panel{ overflow-x:auto; }
+      .list{ min-width: 820px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h1>Hacker News Top</h1>
+        <p>公式JSON（Firebase）で Top を取得（無料・キー不要）</p>
+      </div>
+      <div class="nav">
+        <a href="./">Topへ戻る</a>
+        <a href="./reddit.html">Redditへ</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="meta">
+        <span class="badge" id="status">loading...</span>
+        <span id="updated">updated: -</span>
+      </div>
+      <table class="list" id="tbl"></table>
+    </div>
+  </div>
+
+<script>
+(async () => {
+  const status = document.getElementById("status");
+  const updated = document.getElementById("updated");
+  const tbl = document.getElementById("tbl");
+  try{
+    const res = await fetch("./data/trends_hn.json", { cache: "no-store" });
+    const j = await res.json();
+    if(!j.ok) throw new Error(j.error || "unknown error");
+    updated.textContent = "updated: " + j.updatedAt;
+    status.textContent = "loaded: " + j.items.length;
+
+    tbl.innerHTML = j.items.map((it, i) => {
+      const score = `${it.score} pts / ${it.comments} c`;
+      return `
+      <tr>
+        <td class="idx">#${i+1}</td>
+        <td>
+          <div class="t">${escapeHtml(it.title)}</div>
+          <div class="u">${escapeHtml(it.url)}</div>
+        </td>
+        <td class="r">${escapeHtml(score)}</td>
+      </tr>`;
+    }).join("");
+  }catch(e){
+    status.textContent = "error";
+    updated.textContent = String(e.message || e);
+  }
+
+  function escapeHtml(s){
+    return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+})();
+</script>
+</body>
+</html>
