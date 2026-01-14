@@ -1,355 +1,44 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root{
-  --bg1:#f7f8ff;
-  --bg2:#f2fff7;
-  --ink:#111827;
-  --muted:#6b7280;
-  --card:#ffffffcc;
-  --border:#e5e7eb;
-  --shadow: 0 10px 30px rgba(17,24,39,.08);
-  --accent:#4f46e5;
-  --accent2:#10b981;
+  color-scheme: dark;
 }
 
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
-body{
-  margin:0;
-  color:var(--ink);
+html, body {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+/* ちょい高級感の背景 */
+.bg-hero {
   background:
-    radial-gradient(1200px 600px at 15% 10%, #e8ecff 0%, transparent 60%),
-    radial-gradient(900px 500px at 85% 15%, #dffbf0 0%, transparent 55%),
-    linear-gradient(180deg, var(--bg1), var(--bg2));
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, Arial, sans-serif;
+    radial-gradient(1200px 700px at 20% 10%, rgba(56,189,248,0.20), transparent 60%),
+    radial-gradient(1000px 600px at 85% 30%, rgba(99,102,241,0.18), transparent 55%),
+    radial-gradient(900px 600px at 55% 85%, rgba(34,197,94,0.10), transparent 55%),
+    linear-gradient(180deg, rgba(15,23,42,0.0), rgba(15,23,42,0.85));
 }
 
-/* Links */
-a{
-  color: inherit;
-  text-decoration: none;
-}
-a:hover{ text-decoration: underline; }
-
-/* Layout bits */
-.container{
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 18px 16px 28px;
+.card {
+  @apply rounded-2xl border border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.35)];
 }
 
-.topbar{
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,.65);
-  border-bottom: 1px solid var(--border);
+.pill {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200;
 }
 
-.nav{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-  padding: 10px 16px;
-}
-.brand{
-  font-weight: 800;
-  letter-spacing: .2px;
-  margin-right: 8px;
-}
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,.04);
-}
-.pill:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(0,0,0,.08);
-}
-.pill:active{ transform: translateY(0px); }
-
-/* Cards */
-.card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 16px;
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-100 hover:bg-white/10 active:scale-[0.99] transition;
 }
 
-/* Buttons */
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: white;
-  cursor: pointer;
-  font-weight: 700;
-}
-.btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
-}
-.btn:active{ transform: translateY(0); }
-
-.btn-primary{
-  border: none;
-  color: white;
-  background: linear-gradient(135deg, var(--accent), #7c3aed);
-}
-.btn-green{
-  border: none;
-  color: white;
-  background: linear-gradient(135deg, var(--accent2), #06b6d4);
-}
-.badge{
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(79,70,229,.10);
-  border: 1px solid rgba(79,70,229,.25);
-  color: #3730a3;
+.btn-active {
+  @apply bg-white/15 border-white/20;
 }
 
-/* Table */
-table{
-  width:100%;
-  border-collapse: collapse;
+.mono {
+  font-variant-numeric: tabular-nums;
 }
-th,td{
-  padding: 10px 8px;
-  border-bottom: 1px solid var(--border);
-}
-th{ text-align:left; color:#111827; }
-td.num, th.num{ text-align:right; }
-
-/* Inputs */
-input, select{
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: white;
-}
-label{ color: var(--muted); font-size: 13px; }
-.small{ color: var(--muted); font-size: 13px; }
-.wiki-bg{
-  background:
-    radial-gradient(900px 500px at 15% 10%, rgba(255,255,255,0.10), transparent 60%),
-    radial-gradient(900px 700px at 85% 20%, rgba(120,200,255,0.12), transparent 60%),
-    radial-gradient(900px 700px at 50% 90%, rgba(255,120,180,0.10), transparent 60%),
-    linear-gradient(180deg, #0a0a0a, #000000);
-}
-/* ===== Ads responsive ===== */
-
-/* PC：左右広告レールON、下広告OFF */
-@media (min-width: 1024px) {
-  /* page.tsx内の fixed レールを出す */
-  [aria-hidden] + div + div {
-    /* ここは触らない（保険） */
-  }
-}
-
-/* このプロジェクトはinline styleなので、確実に切り替えたいなら
-   レール/下バーに className を付けるのがベスト。
-   でも「全文コピペ縛り」なので、次の1手で className版にする。 */
-/* ===== Ads responsive (final) ===== */
-.ad-rail {
-  position: fixed;
-  top: 80px;
-  width: 220px;
-  height: calc(100vh - 120px);
-  pointer-events: none;
-  display: none;
-  left: 12px;
-}
-.ad-rail-right {
-  left: auto;
-  right: 12px;
-}
-
-.ad-bottom {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background: rgba(0,0,0,0.45);
-  border-top: 1px solid rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px);
-}
-
-/* PC：左右ON / 下OFF */
-@media (min-width: 1024px) {
-  .ad-rail { display: block; }
-  .ad-bottom { display: none; }
-}
-
-/* スマホ：左右OFF / 下ON（デフォで下はONなので何もしなくてOK） */
-/* ====== Ad Layout ====== */
-.shell{
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 240px minmax(320px, 900px) 240px;
-  gap: 18px;
-  justify-content: center;
-  align-items: start;
-  padding: 18px 18px 90px; /* 下バナー分の余白 */
-}
-
-/* 中身 */
-.content{
-  width: 100%;
-}
-
-/* 左右広告レール */
-.adRail{
-  position: sticky;
-  top: 18px;
-  height: calc(100vh - 36px);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.adBox{
-  width: 100%;
-  height: 600px; /* 例: PCの大枠 */
-  border-radius: 12px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.10);
-  display: grid;
-  place-items: center;
-  color: rgba(255,255,255,0.70);
-  font-weight: 700;
-}
-
-/* 下固定バナー（スマホ用） */
-.adBottom{
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 10px 12px;
-  display: none; /* PCでは非表示 */
-  z-index: 50;
-}
-
-.adBottomInner{
-  max-width: 900px;
-  margin: 0 auto;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(0,0,0,0.78);
-  border: 1px solid rgba(255,255,255,0.12);
-  display: grid;
-  place-items: center;
-  color: rgba(255,255,255,0.75);
-  font-weight: 700;
-}
-
-/* ====== Responsive ====== */
-/* 1024px未満は左右を消して、下バナーだけ */
-@media (max-width: 1024px){
-  .shell{
-    grid-template-columns: 1fr;
-    justify-content: stretch;
-    padding-bottom: 90px;
-  }
-  .adRail{
-    display: none;
-  }
-  .adBottom{
-    display: block;
-  }
-}
-
-/* 超ワイドは左右を少し太くして稼げる面積UP */
-@media (min-width: 1400px){
-  .shell{
-    grid-template-columns: 300px minmax(320px, 980px) 300px;
-  }
-}
-.ad-box {
-  height: 600px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobile-ad {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .pc-ad {
-    display: none;
-  }
-  .mobile-ad {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    text-align: center;
-    line-height: 60px;
-    z-index: 1000;
-  }
-}
-/* ====== premium polish (append) ====== */
-:root{
-  --glass: rgba(255,255,255,.06);
-  --glass2: rgba(255,255,255,.10);
-  --line: rgba(255,255,255,.10);
-  --txt: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.62);
-  --accent: #7aa2ff;
-  --accent2:#53e3c2;
-}
-
-html,body{height:100%}
-body{
-  color: var(--txt);
-  background:
-    radial-gradient(1200px 800px at 15% 0%, rgba(122,162,255,.22), transparent 60%),
-    radial-gradient(900px 700px at 90% 10%, rgba(83,227,194,.16), transparent 55%),
-    linear-gradient(180deg, #070b1a, #0b1733);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans JP", Arial;
-}
-
-a{color:inherit}
-a:hover{color:var(--accent)}
-
-button{
-  border: 1px solid var(--line) !important;
-  background: rgba(255,255,255,.05) !important;
-  border-radius: 14px !important;
-  padding: 10px 14px !important;
-  font-weight: 800 !important;
-}
-button:hover{background: rgba(255,255,255,.08) !important}
-
-*{
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-hr{border-color: var(--line) !important}
