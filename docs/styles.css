@@ -475,3 +475,53 @@ html[data-theme="hn"] body{
     linear-gradient(180deg, #111, #0b0f18);
 }
 
+/* === extra sources ui + themes :START === */
+
+/* unified tab button look (Wikipedia/Google/Reddit/HN all same) */
+.source-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+}
+.source-tab{
+  appearance:none;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform .08s ease, background .15s ease, border-color .15s ease;
+  backdrop-filter: blur(10px);
+}
+.source-tab:hover{ transform: translateY(-1px); }
+.source-tab.is-active{
+  background: rgba(255,255,255,.14);
+  border-color: rgba(255,255,255,.28);
+}
+
+/* keep default background unless data-theme is set */
+:root:not([data-theme]),
+:root[data-theme="default"]{
+  /* do nothing here (your existing base background stays) */
+}
+
+/* reddit / hn backgrounds (only when selected) */
+:root[data-theme="reddit"] body{
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(255, 69, 0, .35), transparent 60%),
+    radial-gradient(1200px 800px at 80% 30%, rgba(255, 255, 255, .18), transparent 60%),
+    linear-gradient(180deg, #111, #0b0f18);
+}
+:root[data-theme="hn"] body{
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(255, 102, 0, .35), transparent 60%),
+    radial-gradient(1200px 800px at 80% 30%, rgba(255, 204, 0, .22), transparent 60%),
+    linear-gradient(180deg, #111, #0b0f18);
+}
+
+/* === extra sources ui + themes :END === */
+
