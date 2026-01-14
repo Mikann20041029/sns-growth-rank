@@ -229,16 +229,47 @@ body[data-theme="wiki"] .btn.active{
 
 /* ===== DESKTOP SIDE ADS (PC + keep TOP AD) ===== */
 
-/* デフォルト(スマホ含む): 左右広告は消す。トップ広告(タイトル下)は今あるまま表示 */
+/* ===== overflow / mobile fix (右端見切れ対策) ===== */
+html, body{
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+*, *::before, *::after{ box-sizing: border-box; }
+img, svg, canvas, video{ max-width: 100%; height: auto; }
+
+/* 横に伸びがちな要素を確実に枠内へ */
+main, .container, .wrap, .content, #app, #root{
+  width: 100%;
+  max-width: 100%;
+}
+
+/* スマホは「枠で囲う」＋左右に余白をつけて見切れ防止 */
+@media (max-width: 700px){
+  main, .container, .wrap, .content, #app, #root{
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* “枠” (スマホの見た目を締める) */
+  .phone-frame, main, .container, .wrap, .content, #app, #root{
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 14px;
+    background: rgba(0,0,0,.10);
+  }
+}
+/* ===== /overflow / mobile fix ===== */
+
+
+/* デフォルト: 左右広告は消す。トップ広告(タイトル下)は今あるまま表示 */
 .ad-side{ display:none; }
 
-/* PCだけ: 左右広告を表示。中央の余白は増やさず、中央の最大幅を広げる */
-@media (min-width: 1100px){
+/* 余裕あるPCだけ左右広告を出す（画面が狭いPCで潰れないように） */
+@media (min-width: 1400px){
   .ad-side{
     display:flex;
     position:fixed;
     top:110px;
-    width:160px;
+    width:300px;           /* ★左右広告を広くする */
     height:600px;
     border:1px dashed rgba(255,255,255,.35);
     border-radius:12px;
@@ -250,18 +281,18 @@ body[data-theme="wiki"] .btn.active{
     z-index:50;
     backdrop-filter: blur(6px);
   }
-  .ad-left{ left:10px; }
-  .ad-right{ right:10px; }
+  .ad-left{ left:12px; }   /* 端寄せ */
+  .ad-right{ right:12px; } /* 端寄せ */
 
-  /* ここが肝：左右パディングで中央を痩せさせない */
+  /* 中央を痩せさせない */
   body{
     padding-left:0 !important;
     padding-right:0 !important;
   }
 
-  /* 中央コンテンツを太くする（サイト側のメインラッパに合わせて効くよう広めに当てる） */
+  /* 中央コンテンツを太く */
   main, .container, .wrap, .content, #app, #root{
-    max-width: 1100px !important;
+    max-width: 1180px !important;
     margin-left:auto !important;
     margin-right:auto !important;
     padding-left: 16px !important;
@@ -269,5 +300,6 @@ body[data-theme="wiki"] .btn.active{
   }
 }
 /* ===== /DESKTOP SIDE ADS ===== */
+
 
 
