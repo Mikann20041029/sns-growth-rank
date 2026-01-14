@@ -149,3 +149,137 @@ label{ color: var(--muted); font-size: 13px; }
     radial-gradient(900px 700px at 50% 90%, rgba(255,120,180,0.10), transparent 60%),
     linear-gradient(180deg, #0a0a0a, #000000);
 }
+/* ===== Ads responsive ===== */
+
+/* PC：左右広告レールON、下広告OFF */
+@media (min-width: 1024px) {
+  /* page.tsx内の fixed レールを出す */
+  [aria-hidden] + div + div {
+    /* ここは触らない（保険） */
+  }
+}
+
+/* このプロジェクトはinline styleなので、確実に切り替えたいなら
+   レール/下バーに className を付けるのがベスト。
+   でも「全文コピペ縛り」なので、次の1手で className版にする。 */
+/* ===== Ads responsive (final) ===== */
+.ad-rail {
+  position: fixed;
+  top: 80px;
+  width: 220px;
+  height: calc(100vh - 120px);
+  pointer-events: none;
+  display: none;
+  left: 12px;
+}
+.ad-rail-right {
+  left: auto;
+  right: 12px;
+}
+
+.ad-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: rgba(0,0,0,0.45);
+  border-top: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px);
+}
+
+/* PC：左右ON / 下OFF */
+@media (min-width: 1024px) {
+  .ad-rail { display: block; }
+  .ad-bottom { display: none; }
+}
+
+/* スマホ：左右OFF / 下ON（デフォで下はONなので何もしなくてOK） */
+/* ====== Ad Layout ====== */
+.shell{
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px minmax(320px, 900px) 240px;
+  gap: 18px;
+  justify-content: center;
+  align-items: start;
+  padding: 18px 18px 90px; /* 下バナー分の余白 */
+}
+
+/* 中身 */
+.content{
+  width: 100%;
+}
+
+/* 左右広告レール */
+.adRail{
+  position: sticky;
+  top: 18px;
+  height: calc(100vh - 36px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.adBox{
+  width: 100%;
+  height: 600px; /* 例: PCの大枠 */
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.70);
+  font-weight: 700;
+}
+
+/* 下固定バナー（スマホ用） */
+.adBottom{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px;
+  display: none; /* PCでは非表示 */
+  z-index: 50;
+}
+
+.adBottomInner{
+  max-width: 900px;
+  margin: 0 auto;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.78);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.75);
+  font-weight: 700;
+}
+
+/* ====== Responsive ====== */
+/* 1024px未満は左右を消して、下バナーだけ */
+@media (max-width: 1024px){
+  .shell{
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    padding-bottom: 90px;
+  }
+  .adRail{
+    display: none;
+  }
+  .adBottom{
+    display: block;
+  }
+}
+
+/* 超ワイドは左右を少し太くして稼げる面積UP */
+@media (min-width: 1400px){
+  .shell{
+    grid-template-columns: 300px minmax(320px, 980px) 300px;
+  }
+}
