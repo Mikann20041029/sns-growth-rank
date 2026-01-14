@@ -1,9 +1,9 @@
 name: Update data (daily)
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # 毎日 00:00 UTC（日本時間09:00）
-  workflow_dispatch: {}
+    - cron: "15 0 * * *" # 毎日 09:15(JST) くらい
 
 permissions:
   contents: write
@@ -27,17 +27,23 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Run updater
+      - name: Run updater (Wikipedia)
         run: node scripts/update.mjs
+
+      - name: Run updater (Google Trends)
+        run: node scripts/update_trends_google.mjs
 
       - name: Commit & push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add docs/data/*.json || true
+
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
           fi
+
           git commit -m "chore: update data"
           git push
