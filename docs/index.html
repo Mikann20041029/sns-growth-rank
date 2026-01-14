@@ -308,8 +308,41 @@ load('wiki');
 })();
 </script>
 <!-- UNIFIED:END -->
+<script>
+(function(){
+  const root = document.documentElement;
+
+  async function loadReddit(){
+    root.setAttribute("data-theme","reddit");
+    const r = await fetch("https://www.reddit.com/r/all/hot.json?limit=30");
+    const j = await r.json();
+    const items = j.data.children.map((c,i)=>({
+      rank:i+1,
+      title:c.data.title,
+      url:"https://reddit.com"+c.data.permalink,
+      views:c.data.score
+    }));
+    window.__renderItems && window.__renderItems(items, "Reddit / hot");
+  }
+
+  async function loadHN(){
+    root.setAttribute("data-theme","hn");
+    const ids = await (await fetch("https://hacker-news.firebaseio.com/v0/topstories.json")).json();
+    const top = ids.slice(0,30);
+    const items = await Promise.all(top.map(async (id,i)=>{
+      const it = await (await fetch("https://hacker-news.firebaseio.com/v0/item/"+id+".json")).json();
+      return { rank:i+1, title:it.title||"(no title)", url:it.url||("https://news.ycombinator.com/item?id="+id), views:it.score||0 };
+    }));
+    window.__renderItems && window.__renderItems(items, "Hacker News / top");
+  }
+
+  document.getElementById("btn-reddit")?.addEventListener("click", loadReddit);
+  document.getElementById("btn-hn")?.addEventListener("click", loadHN);
+})();
+</script>
 </body>
 </html>
+
 
 
 
