@@ -1,82 +1,85 @@
-﻿import fs from "fs";
+﻿import fs from "node:fs";
 
 const OUT_PATH = "docs/data/trends_google.json";
 
+// Google Trends RSS は geo=JP が404になることがあるので、複数URLを順に試す
+const RSS_URLS = [
+  // JP指定（通る時もある）
+  "https://trends.google.com/trends/trendingsearches/daily/rss?geo=JP",
+  // geo指定なし（こっちが通りやすいことが多い）
+  "https://trends.google.com/trends/trendingsearches/daily/rss",
+  // フォールバック（言語だけ）
+  "https://trends.google.com/trends/trendingsearches/daily/rss?hl=ja",
+];
+
 async function fetchText(url) {
   const res = await fetch(url, {
-    headers: {
-      "user-agent": "Mozilla/5.0",
-      "accept": "*/*",
-      "accept-language": "ja,en-US;q=0.9,en;q=0.8",
-    },
+    headers: { "user-agent": "Mozilla/5.0" },
   });
   if (!res.ok) throw new Error(`fetch failed ${res.status}: ${url}`);
   return await res.text();
 }
 
-function extractXml(text) {
-  const i = text.indexOf("<?xml");
-  const j = text.indexOf("<rss");
-  const k = text.indexOf("<feed");
-  const start = [i, j, k].filter(x => x >= 0).sort((a,b)=>a-b)[0];
-  if (start == null) throw new Error("xml not found");
-  return text.slice(start);
+function pickTag(xml, tag) {
+  const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, "i"));
+  return m ? m[1].trim() : "";
 }
 
-function decodeRss(xml) {
+function decodeGoogleTrendsRss(xml) {
+  // 超雑でも動くRSSパーサ（1 item = 1トレンド）
   const items = [];
-  const parts = xml.split("<item>").slice(1);
-  for (const p of parts) {
-    const title = (p.split("<title>")[1] || "").split("</title>")[0] || "";
-    const link  = (p.split("<link>")[1]  || "").split("</link>")[0]  || "";
-    const approx = (p.match(/<ht:approx_traffic>(.*?)<\/ht:approx_traffic>/)?.[1] || "").trim();
-    const n = Number((approx.replace(/,/g,"").match(/\d+/)?.[0] || "0"));
+  const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
+
+  for (const b of blocks) {
+    const title = pickTag(b, "title");
+    const link = pickTag(b, "link");
+    const traffic = pickTag(b, "ht:approx_traffic") || pickTag(b, "approx_traffic");
+
+    // "200K+" みたいなのを数値っぽく整形（失敗したらnull）
+    let views = null;
+    if (traffic) {
+      const t = traffic.replace(/,/g, "").toUpperCase();
+      const m = t.match(/^(\d+(?:\.\d+)?)([KM])?\+?$/);
+      if (m) {
+        const n = Number(m[1]);
+        const unit = m[2];
+        views = unit === "M" ? Math.round(n * 1_000_000) : unit === "K" ? Math.round(n * 1_000) : Math.round(n);
+      }
+    }
+
+    if (!title) continue;
     items.push({
-      title: title.replace(/<!\[CDATA\[|\]\]>/g,"").trim(),
-      url: link.trim(),
-      views: n
+      title,
+      views,
+      url: link || "",
     });
   }
-  items.sort((a,b)=>b.views-a.views);
-  return items.slice(0, 50).map((x, idx)=>({ rank: idx+1, ...x }));
-}
 
-const RSS_CANDIDATES = [
-  "https://trends.google.com/trends/trendingsearches/daily/rss?geo=JP",
-  "https://trends.google.co.jp/trends/trendingsearches/daily/rss?geo=JP",
-  "https://r.jina.ai/https://trends.google.com/trends/trendingsearches/daily/rss?geo=JP",
-  "https://r.jina.ai/https://trends.google.co.jp/trends/trendingsearches/daily/rss?geo=JP",
-];
+  // views が null のものは下に回す
+  items.sort((a, b) => (b.views ?? -1) - (a.views ?? -1));
 
-function readExisting() {
-  try {
-    if (fs.existsSync(OUT_PATH)) {
-      return JSON.parse(fs.readFileSync(OUT_PATH, "utf-8"));
-    }
-  } catch {}
-  return null;
+  return items.slice(0, 50).map((x, i) => ({ rank: i + 1, ...x }));
 }
 
 (async () => {
-  const prev = readExisting();
+  let xml = null;
+  let used = null;
+  let lastErr = null;
+
+  for (const url of RSS_URLS) {
+    try {
+      xml = await fetchText(url);
+      used = url;
+      break;
+    } catch (e) {
+      lastErr = e;
+    }
+  }
 
   try {
-    let lastErr = null;
-    let xml = "";
+    if (!xml) throw lastErr ?? new Error("all RSS urls failed");
 
-    for (const url of RSS_CANDIDATES) {
-      try {
-        const t = await fetchText(url);
-        xml = extractXml(t);
-        lastErr = null;
-        break;
-      } catch (e) {
-        lastErr = e;
-      }
-    }
-    if (lastErr) throw lastErr;
-
-    const items = decodeRss(xml);
+    const items = decodeGoogleTrendsRss(xml);
 
     const out = {
       ok: true,
@@ -84,6 +87,7 @@ function readExisting() {
       geo: "JP",
       lang: "ja",
       updatedAt: new Date().toISOString(),
+      rss: used,
       items,
     };
 
@@ -91,27 +95,19 @@ function readExisting() {
     fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2), "utf-8");
     console.log(`updated ${OUT_PATH}: ${items.length}`);
   } catch (e) {
-    // ★ここが重要：失敗しても「失敗JSONで上書きしない」
-    // ＝最後の成功データが残るので、サイトがerrorに戻らない
-    const msg = String(e?.message ?? e);
-    console.log(`trends fetch failed (kept previous): ${msg}`);
+    const out = {
+      ok: false,
+      source: "google_trends_rss",
+      geo: "JP",
+      lang: "ja",
+      updatedAt: new Date().toISOString(),
+      error: String(e?.message ?? e),
+      items: [],
+    };
 
-    // もし過去データが無い初回だけは、空データを作る（サイトが落ちないように）
-    if (!prev) {
-      const out = {
-        ok: false,
-        source: "google_trends_rss",
-        geo: "JP",
-        lang: "ja",
-        updatedAt: new Date().toISOString(),
-        error: msg,
-        items: [],
-      };
-      fs.mkdirSync("docs/data", { recursive: true });
-      fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2), "utf-8");
-      console.log(`created ${OUT_PATH} (first time only)`);
-    }
-
-    process.exitCode = 0; // workflowは落とさない
+    fs.mkdirSync("docs/data", { recursive: true });
+    fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2), "utf-8");
+    console.log(`failed ${OUT_PATH}: ${out.error}`);
+    process.exitCode = 1;
   }
 })();
