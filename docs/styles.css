@@ -526,3 +526,40 @@ html[data-theme="hn"] body{
 /* === extra sources ui + themes :END === */
 
 
+
+/* ===== PATCH: restore fancy background (keep JS stable) ===== */
+:root{
+  --bg1:#0f172a;
+  --bg2:#111827;
+  --bg3:#1f2937;
+}
+
+body{
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(56,189,248,.22), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(244,114,182,.18), transparent 60%),
+    radial-gradient(900px 700px at 40% 90%, rgba(34,197,94,.12), transparent 60%),
+    linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+  background-attachment: fixed;
+}
+
+/* theme tint (optional) */
+body[data-theme="wiki"]{
+  --bg1:#0b1220; --bg2:#0f172a; --bg3:#111827;
+}
+body[data-theme="trends"]{
+  --bg1:#071a1f; --bg2:#0b2a24; --bg3:#111827;
+}
+body[data-theme="reddit"]{
+  --bg1:#1a0f12; --bg2:#2a1014; --bg3:#111827;
+}
+body[data-theme="hn"]{
+  --bg1:#1a120a; --bg2:#2a1b0b; --bg3:#111827;
+}
+
+/* smooth glass feel on panels */
+.panel, .header, .ad{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+/* ===== END PATCH ===== */
