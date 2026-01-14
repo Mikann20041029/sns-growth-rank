@@ -9,15 +9,41 @@ type WikiItem = {
   url: string;
 };
 
+function getBaseUrlFromEnvOrHeaders() {
+  // Vercel ならこれが一番安定（プロトコル無しで入る）
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // ローカル/それ以外の保険
+  const h = headers(); // next/headers は同期でもOKな版があるので安全側で分岐
+  // もし Promise だったら下の try/catch が拾う
+  // @ts-ignore
+  const host = h.get?.("x-forwarded-host") ?? h.get?.("host");
+  // @ts-ignore
+  const proto = h.get?.("x-forwarded-proto") ?? "http";
+
+  if (host) return `${proto}://${host}`;
+  return "http://localhost:3000";
+}
+
 async function getTop(): Promise<WikiItem[]> {
-  const h = await headers();
+  let base = "http://localhost:3000";
 
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? "https";
+  try {
+    // headers() が Promise 版の環境もあるので、ここで吸収
+    const h = await (headers() as any);
 
-  if (!host) throw new Error("Host header not found");
-
-  const base = `${proto}://${host}`;
+    if (process.env.VERCEL_URL) {
+      base = `https://${process.env.VERCEL_URL}`;
+    } else {
+      const host = h.get("x-forwarded-host") ?? h.get("host");
+      const proto = h.get("x-forwarded-proto") ?? "http";
+      if (host) base = `${proto}://${host}`;
+    }
+  } catch {
+    base = getBaseUrlFromEnvOrHeaders();
+  }
 
   const res = await fetch(`${base}/api/wiki/top`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch wiki top: ${res.status}`);
